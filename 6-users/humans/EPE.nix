@@ -33,6 +33,20 @@
     packages = with pkgs; [ nerd-fonts.fira-code ]; 
   };
 
+  # Merged System Packages from user-apps.nix
+  environment.systemPackages = with pkgs; [ 
+    vim 
+    wget 
+    git 
+    nixos-rebuild-ng 
+    iputils 
+    iproute2 
+    foot 
+    crosvm 
+    chromium 
+    gh 
+  ];
+
   # User Configuration
   users.users.EPE = {
     isNormalUser = true;
@@ -47,5 +61,13 @@
       "kvm" 
       (config.services.seatd.group or "seatd")
     ];
+  };
+
+  # Greeter configuration from user-apps.nix
+  users.users.greeter = { 
+    extraGroups = [ 
+      "video" 
+      (config.services.seatd.group or "seatd") 
+    ]; 
   };
 }
