@@ -4,8 +4,7 @@
   # Force-evaluated user profile configuration v2
   imports = [
     ../../5-system/modules/terminal-foot.nix
-    ../../5-system/modules/audio-pipewire.nix
-    ../../5-system/modules/bluetooth.nix
+    ../../5-system/modules/nu-banner.nix
   ];
 
   users.users.EPE = {

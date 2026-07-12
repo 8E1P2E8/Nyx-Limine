@@ -30,10 +30,4 @@ in
   ];
 
   environment.etc."xdg/foot/foot.ini".source = footConfig;
-
-  # Expose global environmental variables
-  environment.variables = {
-    swayTerm = "foot";
-    SHELL = "${pkgs.nushell}/bin/nu";
-  };
 }
