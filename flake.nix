@@ -13,7 +13,6 @@
       modules = with finix.nixosModules; [
         { nixpkgs.pkgs = nixpkgs.lib.mkDefault pkgs; }
         ./4-hardware/x86_64-linux/latitude5400/hardware-configuration.nix
-        ./core.nix 
         ./3-pkgs/packs.nix
         ./6-users/humans/EPE.nix
 
