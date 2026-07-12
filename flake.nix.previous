@@ -1,0 +1,75 @@
+{
+  description = "Nyx-Flake: Pure, Explicit Universal OS";
+
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    hardware.url = "github:NixOS/nixos-hardware/master";
+    
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-colors.url = "github:misterio77/nix-colors";
+    nix-index-database.url = "github:nix-community/nix-index-database";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
+  };
+
+  outputs = { self, nixpkgs, ... }@inputs: 
+  let
+    system = "x86_64-linux";
+    pkgs = nixpkgs.legacyPackages.${system};
+    
+    nixpkgsInput = import ./1-inputs/nixpkgs.nix { inherit inputs; }; 
+    hostsMap = nixpkgsInput.config.hosts;
+    globalOverlays = nixpkgsInput.config.overlays;
+  in {
+    packages.${system} = {
+      nougat = pkgs.callPackage ./3-pkgs/graphical/nougat.nix {};
+      default = pkgs.callPackage ./3-pkgs/graphical/nougat.nix {};
+    };
+
+    nixosModules = {
+      terminal-foot = import ./5-system/modules/terminal-foot.nix;
+      android-access = ./5-system/modules/android-access.nix;
+      audio-pipewire = ./5-system/modules/audio-pipewire.nix;
+      bluetooth = ./5-system/modules/bluetooth.nix;
+      boot-nvidia = ./5-system/modules/boot-nvidia.nix;
+      bootloader-systemd = ./5-system/modules/bootloader-systemd.nix;
+      disko = ./5-system/modules/disko.nix;
+      hardware-nvidia-bare-metal = ./5-system/modules/hardware-nvidia-bare-metal.nix;
+      host-common = ./5-system/modules/host-common.nix;
+      locale-timezone = ./5-system/modules/locale-timezone.nix;
+      login-manager = ./5-system/modules/login-manager.nix;
+      network = ./5-system/modules/network.nix;
+      nix-settings = ./5-system/modules/nix-settings.nix;
+      performance-tweaks = ./5-system/modules/performance-tweaks.nix;
+      qol-improvements = ./5-system/modules/qol-improvements.nix;
+      ssh-server = ./5-system/modules/ssh-server.nix;
+      sway-gpu = ./5-system/modules/sway-gpu.nix;
+      swayw = ./5-system/modules/swayw.nix;
+      nu-banner = ./5-system/modules/nu-banner.nix;
+      latitude-common = ./5-system/modules/latitude-common.nix;
+      user-omen = ./5-system/modules/user-omen.nix;
+      wayland-remote = ./5-system/modules/wayland-remote.nix;
+      xdg-handler = ./5-system/modules/xdg-handler.nix;
+    };
+
+    nixosConfigurations = builtins.mapAttrs (hostName: coreModule: nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = { inherit inputs; };
+        modules = [ 
+          coreModule
+          { nixpkgs.overlays = globalOverlays; }
+        ];
+    }) hostsMap;
+  };
+}

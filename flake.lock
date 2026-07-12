@@ -1,0 +1,44 @@
+{
+  "nodes": {
+    "finix": {
+      "locked": {
+        "lastModified": 1776904395,
+        "narHash": "sha256-R7U2A+Q2cQOAvnVJ0WzTYwB6Udqeyr/sNoad8k1Im1A=",
+        "owner": "finix-community",
+        "repo": "finix",
+        "rev": "b7a33ff6b856c85fb13c7e9dc03fd41c824299ba",
+        "type": "github"
+      },
+      "original": {
+        "owner": "finix-community",
+        "ref": "b7a33ff6b856c85fb13c7e9dc03fd41c824299ba",
+        "repo": "finix",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1776548001,
+        "narHash": "sha256-ZSK0NL4a1BwVbbTBoSnWgbJy9HeZFXLYQizjb2DPF24=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "b12141ef619e0a9c1c84dc8c684040326f27cdcc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "finix": "finix",
+        "nixpkgs": "nixpkgs"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
