@@ -14,9 +14,9 @@
         { nixpkgs.pkgs = nixpkgs.lib.mkDefault pkgs; }
         ./4-hardware/x86_64-linux/latitude5400/hardware-configuration.nix
         ./core.nix 
-        ./network-ssh.nix 
-        ./desktop.nix 
+        ./3-pkgs/packs.nix
         ./6-users/humans/EPE.nix
+
         nix-daemon openssh sysklogd limine sudo polkit getty bash dhcpcd iwd labwc sway greetd
       ];
       specialArgs = { modulesPath = toString nixpkgs + "/nixos/modules"; };

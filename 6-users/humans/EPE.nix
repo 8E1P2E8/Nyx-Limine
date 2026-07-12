@@ -5,8 +5,36 @@
   imports = [
     ../../5-system/modules/terminal-foot.nix
     ../../5-system/modules/nu-banner.nix
+    ../../5-system/modules/swayw.nix
+    ../../swayw.nix
   ];
 
+  # Non-systemd Networking & Host Settings (Merged from network-ssh.nix)
+  networking.hostName = "latitude5400"; 
+  time.timeZone = "America/Los_Angeles";
+  services.dhcpcd.enable = true;
+  services.iwd.enable = true;
+  services.openssh = { enable = true; settings.PermitRootLogin = "no"; };
+
+  # Graphical & Desktop Settings
+  programs.labwc.enable = true;
+  programs.sway.enable = true;
+  services.mdevd.enable = true;
+  services.seatd.enable = true;
+  services.greetd = {
+    enable = true;
+    settings = {
+      initial_session = { command = "sway"; user = "EPE"; };
+      default_session = { command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd sway"; user = "greeter"; };
+    };
+  };
+  fonts = { 
+    fontconfig.enable = true; 
+    enableDefaultPackages = true; 
+    packages = with pkgs; [ nerd-fonts.fira-code ]; 
+  };
+
+  # User Configuration
   users.users.EPE = {
     isNormalUser = true;
     description = lib.mkForce "EPE User Account";
