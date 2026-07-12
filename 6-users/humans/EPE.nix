@@ -6,6 +6,9 @@
     ../../5-system/modules/terminal-foot.nix
     ../../5-system/modules/nu-banner.nix
     ../../5-system/modules/swayw.nix
+../../5-system/modules/android-access.nix
+#../../5-system/modules/wayland-remote.nix
+
   ];
 
   # Core Boot & System Initialization (Merged from core.nix)
@@ -75,6 +78,7 @@
       "video" 
       "audio" 
       "kvm" 
+      "adbusers"
       (config.services.seatd.group or "seatd")
     ];
   };
