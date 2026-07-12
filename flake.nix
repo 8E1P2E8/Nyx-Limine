@@ -12,11 +12,11 @@
       inherit (pkgs) lib;
       modules = with finix.nixosModules; [
         { nixpkgs.pkgs = nixpkgs.lib.mkDefault pkgs; }
-        ./hardware.nix 
+        ./4-hardware/x86_64-linux/latitude5400/hardware-configuration.nix
         ./core.nix 
         ./network-ssh.nix 
         ./desktop.nix 
-        ./6-users/humans/EPE.nix # Points directly to your modular user definitions
+        ./6-users/humans/EPE.nix
         nix-daemon openssh sysklogd limine sudo polkit getty bash dhcpcd iwd labwc sway greetd
       ];
       specialArgs = { modulesPath = toString nixpkgs + "/nixos/modules"; };
