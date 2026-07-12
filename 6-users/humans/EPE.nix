@@ -6,7 +6,6 @@
     ../../5-system/modules/terminal-foot.nix
     ../../5-system/modules/nu-banner.nix
     ../../5-system/modules/swayw.nix
-    ../../swayw.nix
   ];
 
   # Non-systemd Networking & Host Settings (Merged from network-ssh.nix)
