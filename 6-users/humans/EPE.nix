@@ -1,18 +1,25 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 
 {
-  # Define the user account
+  # Force-evaluated user profile configuration v2
+  imports = [
+    ../../5-system/modules/terminal-foot.nix
+    ../../5-system/modules/audio-pipewire.nix
+    ../../5-system/modules/bluetooth.nix
+  ];
+
   users.users.EPE = {
     isNormalUser = true;
     description = lib.mkForce "EPE User Account";
-    extraGroups = [ 
-      "wheel"           # Allows sudo privileges
-      "networkmanager"  # Allows network configuration changes
-      "video"           # Screen brightness / hardware acceleration controls
-      "audio"           # Audio control
-    ];
-    
-    # Define default user shell
+    password = "$y$j9T$ger6rFJk9H.iujdy2aPGc1$UmV.PRDaSg.zBXUFqsUFOZDqO8XraS.rNXHXVehDLq5";
     shell = pkgs.bash; 
+    extraGroups = [ 
+      "wheel" 
+      "networkmanager" 
+      "video" 
+      "audio" 
+      "kvm" 
+      (config.services.seatd.group or "seatd")
+    ];
   };
 }
